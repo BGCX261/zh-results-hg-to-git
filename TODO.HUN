@@ -1,0 +1,16 @@
+TODO:
+
+ - Adatok tárolása objektumokban
+ - A HTTP hibák (pl. tipikusan 404, ha még nem létezik az eredményfájl, de a rá mutató link már igen) jobb kezelése
+ - Új parancssori kapcsolók (optparse-zal):
+    - -i / --interactive : az ellenőrzendő fájlok megadása kézzel, induláskor
+    - -s / --store       : a név, URL és hashlista tárolása (az -f kapcsoló nélkül egy bizonyos szabály szerint megállapított fájlba)
+    - -r / --retrieve    : a név, URL és hashlista beolvasása (az -f kapcsoló nélkül az első megtalált session fájlból)
+    - -h / --help        : a súgó kiírása
+ - Kisebb javítások, bővebb kommentek
+ - Grafikus felület (GTK+/QT)
+
+DONE:
+
+ - Kód átszervezése objektum-orientálttá
+ - Licenc hozzáadása (GPLv3)
