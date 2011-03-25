@@ -126,7 +126,7 @@ class ResultSet:
 class zh_results:
     
     statusset = {-3:"Hiba", -2:"HTTP{0}", -1:"HTTP404", 0:"Ismeretlen", 1:"Valtozatlan", 2:"Frissitve!"}
-    infoset = {-3:"{0} - {1}", -2:"{0} - {1} szamu HTTP hiba", -1:"{0} - Nem talalhato", 0:"{0} - Nincs ellenorizve", 1:"{0} - Ellenorizve"}
+    infoset = {-3:"{0} - {1}", -2:"{0} - {1} szamu HTTP hiba", -1:"{0} - Nem talalhato", 0:"{0} - Nincs ellenorizve", 1:"{0} - Ellenorizve", 2:"{0} - Inditas ota frissult"}
     datetimeformat = "%H:%M:%S"
     
     def __init__(self, name=None, results=[], sleep=600):
@@ -239,7 +239,9 @@ class zh_results:
             time.sleep(1)
             return True
         except Exception, e:
+            ecls, eprm = sys.exc_info()[:2]
             print "Ismeretlen hiba:", str(e)
+            print "Exception:", ecls, "\nParameter:", eprm, "\n"
             return False
 
 
