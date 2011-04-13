@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# ZH eredmenyellenorzo - Copyright 2011 Istvan Gazsi
+# ExaMiner - Copyright 2011 Istvan Gazsi
 #
 # -----
 #
@@ -117,9 +117,9 @@ class ResultSet:
     
     def populate(self, results=None):
         for res in results:
-            if len(i) > 2:
+            if len(res) > 2:
                 self.results.append(Result(res[1], res[0], res[2]))
-            elif len(i) > 1:
+            elif len(res) > 1:
                 self.results.append(Result(res[1], res[0]))
 
 
@@ -185,7 +185,7 @@ class zh_results:
 
     def print_header(self, status=None, show_sleep=True, show_name=False, can_quit=True):
         print 100 * "\n"
-        print "ZH eredmenyellenorzo\n--------------------\n"
+        print "ExaMiner - ZH eredmenyellenorzo\n-------------------------------\n"
         if status:
             print status, "\n"
         if show_sleep:
