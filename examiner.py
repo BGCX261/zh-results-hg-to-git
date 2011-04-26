@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# ExaMiner - Copyright 2011 Istvan Gazsi
+# exaMiner - Copyright 2011 Istvan Gazsi
 #
 # -----
 #
@@ -185,7 +185,7 @@ class zh_results:
 
     def print_header(self, status=None, show_sleep=True, show_name=False, can_quit=True):
         print 100 * "\n"
-        print "ExaMiner - ZH eredmenyellenorzo\n-------------------------------\n"
+        print "exaMiner - ZH eredmenyellenorzo\n-------------------------------\n"
         if status:
             print status, "\n"
         if show_sleep:
