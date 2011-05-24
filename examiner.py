@@ -27,7 +27,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-import sys, numbers, urllib2, hashlib, datetime, time#, optparse, base64
+import sys, os, numbers, urllib2, hashlib, datetime, time, subprocess#, optparse, base64
 
 
 # ----- BEALLITASOK -----
@@ -139,6 +139,17 @@ class zh_results:
         for status in self.statusset.values():
             if len(status) > self.maxstatuslen:
                 self.maxstatuslen = len(status)
+        # Linux only - Desktop notifications
+        if subprocess.call(["which", "notify-send"]) == 0:
+            self.desktop_notify = True
+        else:
+            self.desktop_notify = False
+        self.panel_notify_wid = os.getenv("WINDOWID")
+        if subprocess.call(["which", "wmctrl"]) == 0 and self.panel_notify_wid:
+            self.panel_notify = True
+        else:
+            self.panel_notify = False
+        # Linux only - Desktop notifications
 
     def interactive_input(self):
         try:
@@ -200,10 +211,29 @@ class zh_results:
     def print_results(self):
         if len(self.results):
             self.print_header(show_name=True)
+            # Linux only - Desktop notifications
+            if self.desktop_notify or self.panel_notify:
+                notify_list = []
+            # Linux only - Desktop notifications
             print "{0:{width}} | {1:{statuswidth}} | {2}".format("Nev", "Statusz", "Info", width=self.maxlen, statuswidth=self.maxstatuslen)
             print "{0:-<{width}} | {1:-<{statuswidth}} | {2}".format("", "", "--------------------", width=self.maxlen, statuswidth=self.maxstatuslen)
             for res in self.results:
                 print "{0:{width}} | {1:{statuswidth}} | {2}".format(res.title, self.statusset[res.status].format(res.statusinfo), res.info, width=self.maxlen, statuswidth=self.maxstatuslen)
+                # Linux only - Desktop notifications
+                if (self.desktop_notify or self.panel_notify) and res.status == 2:
+                    notify_list.append(res.title)
+                # Linux only - Desktop notifications
+            # Linux only - Desktop notifications
+            if notify_list:
+                notify_str = ""
+                for item in notify_list:
+                    notify_str += "\n" + item
+                if self.desktop_notify:
+                    subprocess.Popen(["notify-send", "-i", "terminal", "exaMiner", "A kovetkezo eredmenyek frissultek:\n{0}".format(notify_str)])
+                if self.panel_notify:
+                    subprocess.Popen(["wmctrl", "-i", "-r", self.panel_notify_wid, "-b", "add,demands_attention"])
+            # Linux only - Desktop notifications
+        
 
     def check(self, interactive=False):
         try:
